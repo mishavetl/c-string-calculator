@@ -53,32 +53,49 @@ long long int expr(long long int n1, char symb, long long int n2)
     }
 }
 
-long long int bcalc(char *str, long long int res, bool secondary)
+long long int bcalc(char *str, long long int res, bool secondary, bool brackets)
 {
     char symb = '\0';
     unsigned int isubstr = 0;
     long long int child;
 
-    if (!secondary) {
+    if (istr == 0 && str[istr] == '(') {
+        istr++;
+        child = bcalc(str, 0, true, true);
+        // printf("child: %d\n", child);
+
+        res = child;
+    } else if (!secondary || brackets) {
         while (istr < strlen(str) && str[istr] != ' ') {
-            substr[istr] = str[istr];
+            if (str[istr] != '(') {
+                substr[isubstr] = str[istr];
+                isubstr++;
+            }
             istr++;
         }
 
-        res = extract_number(substr, istr);
-
+        res = extract_number(substr, isubstr);
+        isubstr = 0;
     }
 
     istr++;
 
     for (; istr < strlen(str) + 1; istr++, isubstr++) {
         // printf("symb: %c\n", symb);
-        // printf("substr: %s\n", substr);
         // printf("isubstr: %d\n", isubstr);
+        // printf("substr: %s\n", substr);
         // printf("istr: %d\n", istr);
-        // printf("res: %ld\n", res);
+        // printf("res: %lld\n", res);
 
-        if ((int) str[istr] > 57 || (int) str[istr] < 48 \
+        if (str[istr] == '(') {
+            child = bcalc(str, extract_number(substr, isubstr), true, true);
+            // printf("child: %d\n", child);
+            res = expr(res, symb, child);
+            // res = expr(bcalc(str), symb, extract_number(substr, isubstr));
+        } else if (str[istr] == ')') {
+            res = expr(res, symb, extract_number(substr, isubstr));
+            break;
+        } else if ((int) str[istr] > 57 || (int) str[istr] < 48 \
                 && str[istr] != ' ' && istr != strlen(str)
             ) {
             symb = str[istr];
@@ -87,18 +104,18 @@ long long int bcalc(char *str, long long int res, bool secondary)
             if ((str[istr + 1] == '*' || str[istr + 1] == '/' || str[istr + 1] == '%'
                     ) && !secondary
                 ) {
-                child = bcalc(str, extract_number(substr, isubstr), true);
+                if (str[istr - 1] == ')') {
+                    child = bcalc(str, res, true, brackets);
+                } else {
+                    child = bcalc(str, extract_number(substr, isubstr), true, brackets);
+                }
                 // printf("child: %lld\n", child);
                 // printf("symb: %c\n", symb);
                 res = expr(res, symb, child);
             } else if (isubstr > 0) {
-                if (str[istr + 1] == '(' || str[istr + 2] == '(') {
-                    // res = expr(bcalc(str), symb, extract_number(substr, isubstr));
-                } else {
-                    res = expr(res, symb, extract_number(substr, isubstr));
-                    if (secondary && (str[istr + 1] == '+' || str[istr + 1] == '-')) {
-                        break;
-                    }
+                res = expr(res, symb, extract_number(substr, isubstr));
+                if (secondary && (str[istr + 1] == '+' || str[istr + 1] == '-')) {
+                    break;
                 }
             }
 
@@ -118,7 +135,7 @@ long long int calc(char *str)
 
     istr = 0;
 
-    return bcalc(str, 0, false);
+    return bcalc(str, 0, false, false);
 
     free(substr);
 }

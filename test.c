@@ -56,10 +56,12 @@ int main()
     assert(calc("10005 + 5"), 10010);
 
     assert(calc("2"), 2);
+    assert(calc("0"), 0);
     assert(calc("5263"), 5263);
 
     assert(calc("90 - 10"), 80);
     assert(calc("900 - 10"), 890);
+    assert(calc("1 - 10"), -9);
 
     assert(calc("900 / 10"), 90);
 
@@ -77,6 +79,14 @@ int main()
     assert(calc("1 + 2 + 10 / 2 * 3"), 18);
     assert(calc("1 + 2 + 10 / 2 * 3 + 1 + 1 + 3"), 23);
     assert(calc("1 + 2 + 10 / 2 * 3 % 2 + 1 + 1 + 3"), 9);
+    assert(calc("1 * 1"), 1);
+
+    puts("testing ()");
+    assert(calc("1 * (1 + 1)"), 2);
+    assert(calc("10 * (1 + 1)"), 20);
+    assert(calc("(1 + 3) - 1 * 2"), 8);
+    assert(calc("1 * (1 + 3) * 2 - 2"), 8);
+
     // assert(calc("1 + 10 * 2 * 2"), 21);
     // assert(calc("2 + 3 + 2 * (10 + 1)"), 27);
     // assert(calc("2 + 1 * (10 + 1)"), 13);
