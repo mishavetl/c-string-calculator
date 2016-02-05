@@ -69,6 +69,18 @@ int main()
     assert(calc("901 % 10 + 1"), 2);
     assert(calc("901 + 10 + 1"), 912);
     assert(calc("901 + 10 + 1"), 912);
+    assert(calc("1 + 10 * 2"), 21);
+    assert(calc("10 * 2 * 3"), 60);
+    assert(calc("10 + 3 % 2"), 11);
+    assert(calc("12 + 10 / 2"), 17);
+    assert(calc("1 + 2 + 10 * 2 * 3"), 63);
+    assert(calc("1 + 2 + 10 / 2 * 3"), 18);
+    assert(calc("1 + 2 + 10 / 2 * 3 + 1 + 1 + 3"), 23);
+    assert(calc("1 + 2 + 10 / 2 * 3 % 2 + 1 + 1 + 3"), 9);
+    // assert(calc("1 + 10 * 2 * 2"), 21);
+    // assert(calc("2 + 3 + 2 * (10 + 1)"), 27);
+    // assert(calc("2 + 1 * (10 + 1)"), 13);
+    // assert(calc("50 * (10 + 1)"), 550);
 
     return 0;
 }
