@@ -1,4 +1,5 @@
 # String Calculator in c (beta)
+__Doesn't support double brackets yet__
 
 ## Test
 ```bash

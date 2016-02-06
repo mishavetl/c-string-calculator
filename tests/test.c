@@ -106,5 +106,9 @@ int main()
     assert(calc("1 * (1 + 3) * 2 - 2"), 6);
     assert(calc("1 * (1 + 3) * 2 * (2 + 5) - 2"), 54);
 
+    puts("testing (())");
+    assert(calc("10 * (5 + 4 * (15 - 1) + 1) - 1"), 619);
+    // assert(calc("1 * (1 + 3) * 2 * (2 + 5) - 2"), 54);
+
     return 0;
 }
