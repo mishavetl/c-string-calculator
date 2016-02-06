@@ -51,6 +51,8 @@ long long int expr(long long int n1, char symb, long long int n2)
             puts("[e] cant parse symb");
             break;
     }
+
+    return 1;
 }
 
 long long int bcalc(char *str, long long int res, bool secondary, bool brackets)
@@ -103,7 +105,7 @@ long long int bcalc(char *str, long long int res, bool secondary, bool brackets)
                 res = bcalc(str, res, true, false);
             }
             break;
-        } else if ((int) str[istr] > 57 || (int) str[istr] < 48 \
+        } else if (((int) str[istr] > 57 || (int) str[istr] < 48) \
                 && str[istr] != ' ' && istr != strlen(str)
             ) {
             symb = str[istr];

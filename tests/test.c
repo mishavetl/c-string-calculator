@@ -1,5 +1,5 @@
 #include "testutils.h"
-#include "cstrcalc.h"
+#include "../src/cstrcalc.h"
 
 int main()
 {

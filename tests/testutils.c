@@ -22,6 +22,6 @@ void assert(int n1, int n2)
     if (n1 == n2) {
         success("ok.");
     } else {
-        error("%d != %d err.", n1, n2);
+        error("%lld != %lld err.", n1, n2);
     }
 }
