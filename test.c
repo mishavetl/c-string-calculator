@@ -83,14 +83,28 @@ int main()
 
     puts("testing ()");
     assert(calc("1 * (1 + 1)"), 2);
+    assert(calc("1 * (1 + 1 + 3 + 4)"), 9);
+    assert(calc("1 * (1 + 1 + 3 + 4 * 2)"), 13);
     assert(calc("10 * (1 + 1)"), 20);
-    assert(calc("(1 + 3) - 1 * 2"), 8);
-    assert(calc("1 * (1 + 3) * 2 - 2"), 8);
+    assert(calc("2 * 10 * (1 + 1)"), 40);
+    assert(calc("(1 + 3) - 1 * 2"), 2);
+    assert(calc("1 * (1 + 3) - 1"), 3);
+    assert(calc("1 * (1 + 3) - 1 * 2"), 2);
+    assert(calc("1 * (1 + 3) - 2 * 2"), 0);
+    assert(calc("1 * (1 + 3) - 2 * 2 + 15 * (2 + 3)"), 75);
+    assert(calc("1 * (1 + 3) - 2 * 2 + (2 + 3) - (2 + 5)"), -2);
+    assert(calc("1 * (1 + 3) - 2 * 3 + (2 + 3) * 2"), 8);
 
-    // assert(calc("1 + 10 * 2 * 2"), 21);
-    // assert(calc("2 + 3 + 2 * (10 + 1)"), 27);
-    // assert(calc("2 + 1 * (10 + 1)"), 13);
-    // assert(calc("50 * (10 + 1)"), 550);
+    assert(calc("1 + 10 * 2 * 2"), 41);
+    assert(calc("2 + 3 + 2 * (10 + 1)"), 27);
+    assert(calc("2 + 1 * (10 + 1)"), 13);
+    assert(calc("50 * (10 + 1)"), 550);
+
+    assert(calc("1 + (1 + 3)"), 5);
+
+    assert(calc("1 + (1 + 3) * 2"), 9);
+    assert(calc("1 * (1 + 3) * 2 - 2"), 6);
+    assert(calc("1 * (1 + 3) * 2 * (2 + 5) - 2"), 54);
 
     return 0;
 }

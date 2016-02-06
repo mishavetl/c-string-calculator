@@ -61,7 +61,7 @@ long long int bcalc(char *str, long long int res, bool secondary, bool brackets)
 
     if (istr == 0 && str[istr] == '(') {
         istr++;
-        child = bcalc(str, 0, true, true);
+        child = bcalc(str, 0, false, true);
         // printf("child: %d\n", child);
 
         res = child;
@@ -89,11 +89,19 @@ long long int bcalc(char *str, long long int res, bool secondary, bool brackets)
 
         if (str[istr] == '(') {
             child = bcalc(str, extract_number(substr, isubstr), true, true);
-            // printf("child: %d\n", child);
+            // printf("\tchild: %d\n", child);
+            // printf("\tres: %d\n", res);
+            // printf("\tisubstr: %d\n", isubstr);
             res = expr(res, symb, child);
+            isubstr = -1;
             // res = expr(bcalc(str), symb, extract_number(substr, isubstr));
         } else if (str[istr] == ')') {
             res = expr(res, symb, extract_number(substr, isubstr));
+            if (str[istr + 2] == '*' \
+                    || str[istr + 2] == '/' \
+                    || str[istr + 2] == '%') {
+                res = bcalc(str, res, true, false);
+            }
             break;
         } else if ((int) str[istr] > 57 || (int) str[istr] < 48 \
                 && str[istr] != ' ' && istr != strlen(str)
@@ -104,7 +112,7 @@ long long int bcalc(char *str, long long int res, bool secondary, bool brackets)
             if ((str[istr + 1] == '*' || str[istr + 1] == '/' || str[istr + 1] == '%'
                     ) && !secondary
                 ) {
-                if (str[istr - 1] == ')') {
+                if (str[istr - 2] == ')') {
                     child = bcalc(str, res, true, brackets);
                 } else {
                     child = bcalc(str, extract_number(substr, isubstr), true, brackets);
